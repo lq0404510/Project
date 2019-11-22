@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abcedu.ssm.user.dao.UserDao">
+
+    <resultMap id="userMap" type="com.abcedu.ssm.user.service.bo.User">
+        <id column="id" property="id"></id>
+        <result column="designation" property="designation"></result>
+        <result column="detail" property="detail"></result>
+        <result column="name" property="name"></result>
+        <result column="time" property="time"></result>
+    </resultMap>
+
+    <sql id="userColumns">${alias}.id, ${alias}.detail, ${alias}.designation, ${alias}.name, ${alias}.time</sql>
+
+    <insert id="insert">
+        insert into sys_list(designation, detail, name, time) values(#{designation},
+                #{detail},#{name}, #{time})
+    </insert>
+
+    <update id="update">
+        update sys_list set designation = #{designation}, detail = #{detail}, name = #{name} , time = #{time}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from sys_list where id = #{id}
+    </delete>
+
+    <select id="get" resultMap="userMap">
+        select
+        <include refid="userColumns">
+            <property name="alias" value="t1"/>
+        </include>
+        from sys_list t1 where id = #{id}
+    </select>
+
+    <select id="list" resultMap="userMap">
+        select
+        <include refid="userColumns">
+            <property name="alias" value="t1"/>
+        </include>
+        from sys_list t1
+    </select>
+</mapper>
